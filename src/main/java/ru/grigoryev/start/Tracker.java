@@ -2,6 +2,7 @@ package ru.grigoryev.start;
 
 import ru.grigoryev.models.Item;
 import java.util.Arrays;
+import java.util.Random;
 
 /**
 *Class represent the tracker.
@@ -50,10 +51,11 @@ public class Tracker {
 	*@param item Item to delete
 	*/
 	public void delete(Item item) {
-		for (int i = 0; i < position; i++) {
+		for (int i = 0; i < this.position; i++) {
 			if (this.items[i] != null && this.items[i].getId().equals(item.getId())) {
 				this.items[i] = null;
-				System.arraycopy(this.items, i + 1, this.items, i, position - i - 1);
+				System.arraycopy(this.items, i + 1, this.items, i, this.position - i - 1);
+				this.position--;
 				break;
 			}
 		}
@@ -71,7 +73,7 @@ public class Tracker {
 	}
 	/**
 	*This method is used for getting a list of all items with matching names.
-	@param key key name
+	 *@param key key name
 	*@return Array of matching items.
 	*/
 	public Item[] findByName(String key) {
@@ -79,7 +81,7 @@ public class Tracker {
 		int matches = 0;
 		for (int i = 0; i < position; i++) {
 			if (this.items[i].getName().equals(key)) {
-				this.result[matches++] = item[i];
+				result[matches++] = items[i];
 			}
 		}
 		return Arrays.copyOf(result, matches);

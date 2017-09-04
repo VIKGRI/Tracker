@@ -1,6 +1,6 @@
 package ru.grigoryev.start;
 
-import ru.grigoryev.models.Task;
+import ru.grigoryev.models.Item;
 /**
 *Class represent the interface of tracker.
 *@author vgrigoryev
@@ -14,8 +14,8 @@ public class StartUI {
 	*/
 	public static void main(String[] args) {
 		Tracker tracker = new Tracker();
-		tracker.add(new Task("first task", "first desc"));
-		for (Item item : tracker.getAll()) {
+		tracker.add(new Item("first task", "first desc", 0L));
+		for (Item item : tracker.findAll()) {
 			System.out.println(item.getName());
 		}
 	}
