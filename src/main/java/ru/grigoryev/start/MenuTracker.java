@@ -64,22 +64,22 @@ public class MenuTracker {
 		}
 		switch (menuItem) {
 			case ADD:
-				this.createItem(input, tracker); //+
+				this.createItem(input, tracker); //++
 				break;
 			case SHOW_ALL:
-				this.getAllItems(input, tracker); //+
+				this.getAllItems(input, tracker); //++
 				break;
 			case EDIT:
-				this.updateItem(input, tracker); //+
+				this.updateItem(input, tracker); //++
 				break;
 			case DELETE:
-				this.deleteItem(input, tracker); //+
+				this.deleteItem(input, tracker); //++
 				break;
 			case FIND_BY_ID:
-				this.findItemById(input, tracker); //+
+				this.findItemById(input, tracker); //++
 				break;
 			case FIND_ALL_BY_NAME:
-				this.findItemsByName(input, tracker); //-
+				this.findItemsByName(input, tracker); //+
 				break;
 			case EXIT:
 				break;

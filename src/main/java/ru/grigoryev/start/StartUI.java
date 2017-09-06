@@ -8,15 +8,21 @@ package ru.grigoryev.start;
 */
 public class StartUI {
 	/**
-	*This init method.
+	*This field represents input.
 	*/
 	private Input input;
 	/**
+	*Tracker.
+	*/
+	private Tracker tracker;
+	/**
 	*Constructor with parameters.
 	*@param input Input
+	*@param tracker Tracker
 	*/
-	public StartUI(Input input) {
+	public StartUI(Input input, Tracker tracker) {
 		this.input = input;
+		this.tracker = tracker;
 	}
 	/**
 	*This init method.
@@ -24,10 +30,9 @@ public class StartUI {
 	public void init() {
 		String name = null;
 		int menuItem = 0;
-		Tracker tracker = new Tracker();
 		MenuTracker menu = new MenuTracker();
 		while (true) {
-			menuItem = menu.select(this.input, tracker);
+			menuItem = menu.select(this.input, this.tracker);
 			if (menuItem == MenuTracker.INPUT_ERROR) {
 				this.input.print("Input error\n");
 				continue;
@@ -44,6 +49,7 @@ public class StartUI {
 	*/
 	public static void main(String[] args) {
 		Input input = new ConsoleInput();
-		new StartUI(input).init();
+		Tracker tracker = new Tracker();
+		new StartUI(input, tracker).init();
 	}
 }
