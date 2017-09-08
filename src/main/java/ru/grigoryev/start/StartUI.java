@@ -30,9 +30,9 @@ public class StartUI {
 	public void init() {
 		String name = null;
 		int menuItem = 0;
-		MenuTracker menu = new MenuTracker();
+		MenuTracker menu = new MenuTracker(this.input, this.tracker);
 		while (true) {
-			menuItem = menu.select(this.input, this.tracker);
+			menuItem = menu.select();
 			if (menuItem == MenuTracker.INPUT_ERROR) {
 				this.input.print("Input error\n");
 				continue;
