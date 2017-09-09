@@ -33,10 +33,6 @@ public class StartUI {
 		MenuTracker menu = new MenuTracker(this.input, this.tracker);
 		while (true) {
 			menuItem = menu.select();
-			if (menuItem == MenuTracker.INPUT_ERROR) {
-				this.input.print("Input error\n");
-				continue;
-			}
 			if (menuItem == MenuTracker.EXIT) {
 				this.input.print("EXIT\n");
 				break; //EXIT
@@ -48,7 +44,7 @@ public class StartUI {
 	*@param args args
 	*/
 	public static void main(String[] args) {
-		Input input = new ConsoleInput();
+		Input input = new ValidateInput();
 		Tracker tracker = new Tracker();
 		new StartUI(input, tracker).init();
 	}

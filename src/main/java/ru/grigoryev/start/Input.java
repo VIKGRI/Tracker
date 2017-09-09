@@ -13,6 +13,13 @@ public interface Input {
 	*/
 	String ask(String question);
 	/**
+	*This method provides asking user a question.
+	*@param question question
+	*@param range range of numbers which corresponds to items in menu
+	*@return question to the user
+	*/
+	int ask(String question, int[] range);
+	/**
 	*This method provides printing date.
 	*@param data Data to print out
 	*/

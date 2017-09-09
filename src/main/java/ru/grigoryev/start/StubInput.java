@@ -39,6 +39,24 @@ public class StubInput implements Input {
 		return answers[position++];
 	}
 	/**
+	*This method provides asking user a question.
+	*@param question question
+	*@param range range of numbers which corresponds to items in menu
+	*@return question to the user
+	*/
+	public int ask(String question, int[] range) {
+		//throw new UnsupportedOperationException("Unsupported operation");
+		int key = Integer.valueOf(this.ask(question));
+		boolean exist = false;
+		for (int value: range) {
+			if (value == key) {
+				exist = true;
+				break;
+			}
+		}
+		return exist ? key : -1;
+	}
+	/**
 	*This method provides locating data in the buffer.
 	*@param data Data to print out
 	*/

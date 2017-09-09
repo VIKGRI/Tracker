@@ -22,6 +22,10 @@ public class MenuTracker {
 	*/
 	private UserAction[] actions;
 	/**
+	*represents range of menu items.
+	*/
+	private int[] range;
+	/**
 	*represents the key ADD to add item.
 	*/
 	static final int ADD = 0;
@@ -63,6 +67,11 @@ public class MenuTracker {
 		this.tracker = tracker;
 		this.actions = new UserAction[6];
 		this.fillActions();
+		this.range = new int[this.actions.length + 1]; // в массиве диапазонов содержится также ключ EXIT в отличие от массива action
+		for (int i = 0; i < this.actions.length; i++) {
+			this.range[i] = this.actions[i].key(); // Заполняем массив диапазонов значениями ключей каждого действия в меню
+		}
+		this.range[this.actions.length] = EXIT; // Последнее число в массиве диапазонов представляет выход (EXIT)
 	}
 	/**
 	*This method adds all actions.
@@ -85,19 +94,12 @@ public class MenuTracker {
 		}
 		System.out.println(String.format("%d. %s", EXIT, "Exit Program."));
 		int key = 0;
-		try {
-			key = Integer.parseInt(input.ask("Select: "));
-		} catch (NumberFormatException ex) {
-			key = INPUT_ERROR;
-		}
+		key = input.ask("Select: ", range);
 		switch (key) {
-			case ADD: case SHOW_ALL: case EDIT:
-			case DELETE: case FIND_BY_ID: case FIND_ALL_BY_NAME:
-			    this.actions[key].execute(this.input, this.tracker);
-			    break;
 			case EXIT:
 			    break;
 			default:
+			    this.actions[key].execute(this.input, this.tracker);
 			    break;
 		}
 		return key;
