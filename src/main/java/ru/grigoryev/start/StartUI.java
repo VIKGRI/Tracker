@@ -1,5 +1,7 @@
 package ru.grigoryev.start;
 
+import ru.grigoryev.models.Item;
+
 /**
 *Class represent the interface of tracker.
 *@author vgrigoryev
@@ -31,6 +33,19 @@ public class StartUI {
 		String name = null;
 		int menuItem = 0;
 		MenuTracker menu = new MenuTracker(this.input, this.tracker);
+		UserAction findAllByNameAction = new BaseAction("Find all items by name.", MenuTracker.FIND_ALL_BY_NAME) {
+			public int key() {
+				return MenuTracker.FIND_ALL_BY_NAME;
+			}
+			public void execute(Input input, Tracker tracker) {
+				String key = input.ask("Please, enter the name of the item: ");
+				Item[] items = tracker.findByName(key);
+				for (Item current: items) {
+					input.print("Name: " + current.getName() + " Description: " + current.getDescription() + "\n");
+				}
+			}
+		};
+		menu.addAction(findAllByNameAction);
 		while (true) {
 			menuItem = menu.select();
 			if (menuItem == MenuTracker.EXIT) {
