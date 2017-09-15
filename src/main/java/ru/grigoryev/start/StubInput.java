@@ -1,5 +1,7 @@
 package ru.grigoryev.start;
 
+import java.util.ArrayList;
+
 /**
 *Class represent the console input.
 *@author vgrigoryev
@@ -44,7 +46,7 @@ public class StubInput implements Input {
 	*@param range range of numbers which corresponds to items in menu
 	*@return question to the user
 	*/
-	public int ask(String question, int[] range) {
+	public int ask(String question, ArrayList<Integer> range) {
 		//throw new UnsupportedOperationException("Unsupported operation");
 		int key = Integer.valueOf(this.ask(question));
 		boolean exist = false;

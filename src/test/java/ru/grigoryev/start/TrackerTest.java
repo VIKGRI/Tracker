@@ -8,6 +8,8 @@ import static org.junit.Assert.assertThat;
 import ru.grigoryev.models.Item;
 import ru.grigoryev.models.Task;
 
+import java.util.ArrayList;
+
 /**
 *Class for class Tracker testing.
 *@author vgrigoryev
@@ -72,9 +74,9 @@ public class TrackerTest {
 		tracker.add(item1);
 		tracker.add(item2);
 		// Создаем массив из этих заявок.
-		Item[] isExpect = new Item[2];
-		isExpect[0] = item1;
-		isExpect[1] = item2;
+		ArrayList<Item> isExpect = new ArrayList<>();
+		isExpect.add(item1);
+		isExpect.add(item2);
 		// Проверяем, что возвращает все заявки.
 		assertThat(tracker.findAll(), is(isExpect));
 	}
@@ -90,8 +92,8 @@ public class TrackerTest {
 		tracker.add(item1);
 		tracker.add(item2);
 		// Создаем массив из этих заявок.
-		Item[] isExpect = new Item[1];
-		isExpect[0] = item1;
+		ArrayList<Item> isExpect = new ArrayList<>();
+		isExpect.add(item1);
 		// Проверяем, что возвращает массив с одной заявкой.
 		assertThat(tracker.findByName("test1"), is(isExpect));
 	}

@@ -1,5 +1,7 @@
 package ru.grigoryev.start;
 
+import java.util.ArrayList;
+
 /**
 *Class represent the user  console input which is going to be validated.
 *@author vgrigoryev
@@ -13,7 +15,7 @@ public class ValidateInput extends ConsoleInput {
 	*@param range range of numbers which corresponds to items in menu
 	*@return number of item in the menu
 	*/
-	public int ask(String question, int[] range) {
+	public int ask(String question, ArrayList<Integer> range) {
 		boolean invalid = true;
 		int value = -1;
 		do {

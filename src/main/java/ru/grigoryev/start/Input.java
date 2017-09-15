@@ -1,4 +1,7 @@
 package ru.grigoryev.start;
+
+import java.util.ArrayList;
+
 /**
 *Interface represent the console input.
 *@author vgrigoryev
@@ -18,7 +21,7 @@ public interface Input {
 	*@param range range of numbers which corresponds to items in menu
 	*@return question to the user
 	*/
-	int ask(String question, int[] range);
+	int ask(String question, ArrayList<Integer> range);
 	/**
 	*This method provides printing date.
 	*@param data Data to print out

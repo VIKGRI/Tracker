@@ -1,7 +1,8 @@
 package ru.grigoryev.start;
 
 import ru.grigoryev.models.Item;
-import java.util.Arrays;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -14,11 +15,7 @@ public class Tracker {
 	/**
 	*items.
 	*/
-	private Item[] items = new Item[100];
-	/**
-	*free position in the array - amount of items.
-	*/
-	private int position = 0;
+	private ArrayList<Item> items = new ArrayList<Item>();
 	/**
 	*ID.
 	*/
@@ -30,7 +27,7 @@ public class Tracker {
 	*/
 	public Item add(Item item) {
 		item.setId(this.generateId());
-		this.items[position++] = item;
+		items.add(item);
 		return item;
 	}
 
@@ -39,9 +36,9 @@ public class Tracker {
 	*@param item Updated item
 	*/
 	public void update(Item item) {
-		for (int i = 0; i < position; i++) {
-			if (this.items[i] != null && this.items[i].getId().equals(item.getId())) {
-				this.items[i] = item;
+		for (int i = 0; i < items.size(); i++) {
+			if (this.items.get(i) != null && this.items.get(i).getId().equals(item.getId())) {
+				this.items.set(i, item);
 				break;
 			}
 		}
@@ -51,11 +48,9 @@ public class Tracker {
 	*@param item Item to delete
 	*/
 	public void delete(Item item) {
-		for (int i = 0; i < this.position; i++) {
-			if (this.items[i] != null && this.items[i].getId().equals(item.getId())) {
-				this.items[i] = null;
-				System.arraycopy(this.items, i + 1, this.items, i, this.position - i - 1);
-				this.position--;
+		for (int i = 0; i < this.items.size(); i++) {
+			if (this.items.get(i) != null && this.items.get(i).getId().equals(item.getId())) {
+				this.items.remove(i);
 				break;
 			}
 		}
@@ -64,10 +59,10 @@ public class Tracker {
 	*This method is used for getting a list of all items.
 	*@return Array of all items.
 	*/
-	public Item[] findAll() {
-		Item[] result = new Item[position];
-		for (int i = 0; i < position; i++) {
-			result[i] = this.items[i];
+	public ArrayList<Item> findAll() {
+		ArrayList<Item> result = new ArrayList<Item>();
+		for (Item value : this.items) {
+			result.add(value);
 		}
 		return result;
 	}
@@ -76,15 +71,14 @@ public class Tracker {
 	 *@param key key name
 	*@return Array of matching items.
 	*/
-	public Item[] findByName(String key) {
-		Item[] result = new Item[position];
-		int matches = 0;
-		for (int i = 0; i < position; i++) {
-			if (this.items[i].getName().equals(key)) {
-				result[matches++] = items[i];
+	public ArrayList<Item> findByName(String key) {
+		ArrayList<Item> result = new ArrayList<Item>();
+		for (Item value : this.items) {
+			if (value.getName().equals(key)) {
+				result.add(value);
 			}
 		}
-		return Arrays.copyOf(result, matches);
+		return result;
 	}
 	/**
 	*This method is used for finding an item by its id.
@@ -93,9 +87,9 @@ public class Tracker {
 	*/
 	public Item findById(String id) {
 		Item result = null;
-		for (Item item: items) {
-			if (item != null && item.getId().equals(id)) {
-				result = item;
+		for (Item value: items) {
+			if (value.getId().equals(id)) {
+				result = value;
 				break;
 			}
 		}

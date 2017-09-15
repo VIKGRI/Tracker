@@ -23,7 +23,7 @@ public class StubInputTest {
 		Tracker tracker = new Tracker(); // создаём Tracker
 		Input input = new StubInput(new String[]{"0", "test name", "desc", "6"}); //создаём StubInput с последовательностью действий
 		new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
-		assertThat(tracker.findAll()[0].getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+		assertThat(tracker.findAll().get(0).getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
 	}
 	/**
 	*method for findAll testing.
@@ -34,9 +34,9 @@ public class StubInputTest {
 		Input input = new StubInput(new String[]{"0", "test name", "desc", "0", "test name2", "desc", "1", "6"}); //создаём StubInput с последовательностью действий
 		new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
 		String[] expected = new String[4]; //Массив ожидаемых данных
-		expected[0] = new String("Name: test name Description: desc ID: " + tracker.findAll()[0].getId() + "\n");
+		expected[0] = new String("Name: test name Description: desc ID: " + tracker.findAll().get(0).getId() + "\n");
 		expected[1] = "\n";
-		expected[2] = new String("Name: test name2 Description: desc ID: " + tracker.findAll()[1].getId() + "\n");
+		expected[2] = new String("Name: test name2 Description: desc ID: " + tracker.findAll().get(1).getId() + "\n");
 		expected[3] = "\n";
 		String[] result = Arrays.copyOf(((StubInput) input).getOutputBuffer(), 4); // Массив добавленных имен
 		assertThat(result, is(expected)); // проверяем, в буфер были выведены все элементы из треккера.
