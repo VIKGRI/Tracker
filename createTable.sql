@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS items (id VARCHAR(50) PRIMARY KEY NOT NULL, name VARCHAR(50), description TEXT, create_time VARCHAR(50));

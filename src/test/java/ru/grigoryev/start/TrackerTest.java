@@ -9,6 +9,7 @@ import ru.grigoryev.models.Item;
 import ru.grigoryev.models.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
 *Class for class Tracker testing.
@@ -23,11 +24,13 @@ public class TrackerTest {
 	@Test
 	public void whenAddItemThenReturnNewName() {
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		Item current = new Item("test1", "testDescription", 123L);
 		// Добавляем заявку в трекер. Теперь объект проинициализирован id.
 		String newItemId = tracker.add(current).getId();
 		// Проверяем, что заявка с таким id добавилась.
 		assertThat(tracker.findById(newItemId).getName(), is("test1"));
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for update method testing.
@@ -35,6 +38,7 @@ public class TrackerTest {
 	@Test
 	public void whenUpdateNameThenReturnNewName() {
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		Item previous = new Item("test1", "testDescription", 123L);
 		// Добавляем заявку в трекер. Теперь в объект проинициализирован id.
 		tracker.add(previous);
@@ -46,6 +50,7 @@ public class TrackerTest {
 		tracker.update(next);
 		// Проверяем, что заявка с таким id имеет новые имя test2.
 		assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for delete method testing.
@@ -53,6 +58,7 @@ public class TrackerTest {
 	@Test
 	public void whenDeleteItemThenNotFoundById() {
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		Item current = new Item("test1", "testDescription", 123L);
 		// Добавляем заявку в трекер. Теперь в объекте проинициализирован id.
 		String newItemId = tracker.add(current).getId();
@@ -61,6 +67,7 @@ public class TrackerTest {
 		// Проверяем, что заявка была удалена.
 		Item nullReference  = null;
 		assertThat(tracker.findById(newItemId), is(nullReference));
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for findAll method testing.
@@ -68,17 +75,19 @@ public class TrackerTest {
 	@Test
 	public void whenFindAllThenAllFound() {
 		Tracker tracker = new Tracker();
-		Item item1 = new Item("test1", "testDescription", 123L);
-		Item item2 = new Item("test1", "testDescription", 123L);
+		tracker.clearItemsStorage();
+		Item item1 = new Item("test23", "testDescription", 123L);
+		Item item2 = new Item("test24", "testDescription", 123L);
 		// Добавляем заявку в трекер. Теперь в объекте проинициализирован id.
-		tracker.add(item1);
-		tracker.add(item2);
+		Item item1WithID = tracker.add(item1);
+		Item item2WithID = tracker.add(item2);
 		// Создаем массив из этих заявок.
-		ArrayList<Item> isExpect = new ArrayList<>();
-		isExpect.add(item1);
-		isExpect.add(item2);
+		List<Item> isExpect = new ArrayList<>();
+		isExpect.add(item1WithID);
+		isExpect.add(item2WithID);
 		// Проверяем, что возвращает все заявки.
 		assertThat(tracker.findAll(), is(isExpect));
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for findByName method testing.
@@ -86,16 +95,17 @@ public class TrackerTest {
 	@Test
 	public void whenFindByNameThenFound() {
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		Item item1 = new Item("test1", "testDescription", 123L);
 		Item item2 = new Item("test2", "testDescription", 123L);
 		// Добавляем заявку в трекер. Теперь в объекте проинициализирован id.
-		tracker.add(item1);
+		Item item1withId = tracker.add(item1);
 		tracker.add(item2);
 		// Создаем массив из этих заявок.
-		ArrayList<Item> isExpect = new ArrayList<>();
-		isExpect.add(item1);
+		String isExpect = item1withId.getId();
 		// Проверяем, что возвращает массив с одной заявкой.
-		assertThat(tracker.findByName("test1"), is(isExpect));
+		assertThat(tracker.findByName("test1").get(0).getId(), is(isExpect));
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for findById method testing.
@@ -103,12 +113,14 @@ public class TrackerTest {
 	@Test
 	public void whenFindByIdThenFound() {
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		Item item1 = new Item("test1", "testDescription", 123L);
 		Item item2 = new Item("test2", "testDescription", 123L);
 		// Добавляем заявку в трекер. Теперь в объекте проинициализирован id.
 		String id1 = tracker.add(item1).getId();
 		String id2 = tracker.add(item2).getId();
 		// Проверяем, что возвращает нужную заявку.
-		assertThat(tracker.findById(id1), is(item1));
+		assertThat(tracker.findById(id1).getName(), is("test1"));
+		tracker.closeTrackerResources();
 	}
 }

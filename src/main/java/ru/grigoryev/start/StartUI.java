@@ -3,6 +3,7 @@ package ru.grigoryev.start;
 import ru.grigoryev.models.Item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
 *Class represent the interface of tracker.
@@ -28,6 +29,11 @@ public class StartUI {
 		this.input = input;
 		this.tracker = tracker;
 	}
+
+	public void closeAppResources() {
+
+	}
+
 	/**
 	*This init method.
 	*/
@@ -41,7 +47,7 @@ public class StartUI {
 			}
 			public void execute(Input input, Tracker tracker) {
 				String key = input.ask("Please, enter the name of the item: ");
-				ArrayList<Item> items = tracker.findByName(key);
+				List<Item> items = tracker.findByName(key);
 				for (Item current: items) {
 					input.print("Name: " + current.getName() + " Description: " + current.getDescription() + "\n");
 				}

@@ -74,4 +74,36 @@ public class Item {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Item item = (Item) o;
+
+		if (create != item.create) {
+			return false;
+		}
+		if (!id.equals(item.id)) {
+			return false;
+		}
+		if (name != null ? !name.equals(item.name) : item.name != null) {
+			return false;
+		}
+		return description != null ? description.equals(item.description) : item.description == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = id.hashCode();
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (description != null ? description.hashCode() : 0);
+		result = 31 * result + (int) (create ^ (create >>> 32));
+		return result;
+	}
 }

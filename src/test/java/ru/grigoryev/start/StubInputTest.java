@@ -23,7 +23,9 @@ public class StubInputTest {
 		Tracker tracker = new Tracker(); // создаём Tracker
 		Input input = new StubInput(new String[]{"0", "test name", "desc", "6"}); //создаём StubInput с последовательностью действий
 		new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
+		tracker = new Tracker();
 		assertThat(tracker.findAll().get(0).getName(), is("test name")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for findAll testing.
@@ -31,8 +33,10 @@ public class StubInputTest {
 	@Test
 	public void whenUserfindAllItemsThenTrackerReturnsAllItems() {
 		Tracker tracker = new Tracker(); // создаём Tracker
+		tracker.clearItemsStorage();
 		Input input = new StubInput(new String[]{"0", "test name", "desc", "0", "test name2", "desc", "1", "6"}); //создаём StubInput с последовательностью действий
 		new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
+		tracker = new Tracker();
 		String[] expected = new String[4]; //Массив ожидаемых данных
 		expected[0] = new String("Name: test name Description: desc ID: " + tracker.findAll().get(0).getId() + "\n");
 		expected[1] = "\n";
@@ -40,6 +44,7 @@ public class StubInputTest {
 		expected[3] = "\n";
 		String[] result = Arrays.copyOf(((StubInput) input).getOutputBuffer(), 4); // Массив добавленных имен
 		assertThat(result, is(expected)); // проверяем, в буфер были выведены все элементы из треккера.
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for update item testing.
@@ -48,6 +53,7 @@ public class StubInputTest {
 	public void whenUpdateThenTrackerHasUpdatedValue() {
 		// создаём Tracker
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		//Напрямую добавляем заявку
 		Item item = tracker.add(new Item());
 		//создаём StubInput с последовательностью действий
@@ -55,7 +61,9 @@ public class StubInputTest {
 		// создаём StartUI и вызываем метод init()
 		new StartUI(input, tracker).init();
 		// проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
+		tracker = new Tracker();
 		assertThat(tracker.findById(item.getId()).getName(), is("test name"));
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for delete item testing.
@@ -64,6 +72,7 @@ public class StubInputTest {
 	public void whenDeleteThenTrackerHasNoValue() {
 		// создаём Tracker
 		Tracker tracker = new Tracker();
+		tracker.clearItemsStorage();
 		//Напрямую добавляем заявку
 		Item item = tracker.add(new Item("test name", "desc", System.currentTimeMillis()));
 		//создаём StubInput с последовательностью действий
@@ -71,8 +80,11 @@ public class StubInputTest {
 		// создаём StartUI и вызываем метод init()
 		new StartUI(input, tracker).init();
 		Item nullReference = null;
+		tracker = new Tracker();
 		// проверяем, что в треккере нет элемента с id, который был добавлен при эмуляции.
 		assertThat(tracker.findById(item.getId()), is(nullReference));
+		tracker.closeTrackerResources();
+
 	}
 	/**
 	*method for find item by id testing.
@@ -80,6 +92,7 @@ public class StubInputTest {
 	@Test
 	public void whenUserfindByIdItemThenTrackerReturnsItemWithSameId() {
 		Tracker tracker = new Tracker(); // создаём Tracker
+		tracker.clearItemsStorage();
 		//Напрямую добавляем заявку
 		Item item1 = tracker.add(new Item("test name1", "desc", System.currentTimeMillis()));
 		//Напрямую добавляем еще одну заявку
@@ -91,6 +104,7 @@ public class StubInputTest {
 		expected[0] = new String("Name: test name1 Description: desc" + "\n");
 		String[] result = Arrays.copyOf(((StubInput) input).getOutputBuffer(), 1); // Массив добавленных имен
 		assertThat(result, is(expected)); // проверяем, в буфер был выведен элемент с тем id, с которым мы искали.
+		tracker.closeTrackerResources();
 	}
 	/**
 	*method for find all by name testing.
@@ -98,6 +112,7 @@ public class StubInputTest {
 	@Test
 	public void whenUserfindByNameThenTrackerReturnsAllItemsWithSameName() {
 		Tracker tracker = new Tracker(); // создаём Tracker
+		tracker.clearItemsStorage();
 		//Напрямую добавляем заявку
 		Item item1 = tracker.add(new Item("test name1", "desc", System.currentTimeMillis()));
 		//Напрямую добавляем еще одну заявку
@@ -112,5 +127,6 @@ public class StubInputTest {
 		expected[1] = new String("Name: test name1 Description: desc" + "\n");
 		String[] result = Arrays.copyOf(((StubInput) input).getOutputBuffer(), 2); // Массив добавленных имен
 		assertThat(result, is(expected)); // проверяем, в буфер был выведен элемент с тем name, с которым мы искали.
+		tracker.closeTrackerResources();
 	}
 }

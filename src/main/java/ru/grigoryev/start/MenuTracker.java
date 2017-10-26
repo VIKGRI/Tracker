@@ -3,6 +3,7 @@ package ru.grigoryev.start;
 import ru.grigoryev.models.Item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class represent the menu.
@@ -61,7 +62,7 @@ public class MenuTracker {
      */
     static final int EXIT = 6;
     /**
-     * represents the key EXIT to exit the programm.
+     * represents the key INPUT_ERROR.
      */
     static final int INPUT_ERROR = -1;
 
@@ -125,6 +126,7 @@ public class MenuTracker {
         key = input.ask("Select: ", this.range);
         switch (key) {
             case EXIT:
+                this.tracker.closeTrackerResources(); // Closes connection before exit.
                 break;
             default:
                 this.actions.get(key).execute(this.input, this.tracker);
@@ -220,7 +222,7 @@ public class MenuTracker {
          * @param tracker Tracker which contains items and manadges
          */
         public void execute(Input input, Tracker tracker) {
-            ArrayList<Item> items = tracker.findAll();
+            List<Item> items = tracker.findAll();
             for (Item current : items) {
                 input.print("Name: " + current.getName() + " Description: " + current.getDescription() + " ID: " + current.getId() + "\n");
                 input.print("\n");
@@ -308,7 +310,11 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("Please, enter the id of the item: ");
             Item item = tracker.findById(id);
-            input.print("Name: " + item.getName() + " Description: " + item.getDescription() + "\n");
+            if (item != null) {
+                input.print("Name: " + item.getName() + " Description: " + item.getDescription() + "\n");
+            } else {
+                input.print("Item with id: " + id + " doesn't exist\n");
+            }
         }
     }
 }
